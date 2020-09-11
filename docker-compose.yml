@@ -1,0 +1,29 @@
+version: "3.8"
+
+x-run-demo:
+  &run-demo
+  volumes:
+    - type: bind
+      read_only: false
+      source: .
+      target: /workspace
+  working_dir: /workspace
+  command: ["python", "manage.py", "demo"]
+
+services:
+
+  django-2:
+    build:
+      context: .
+      args:
+        PYTHON_VERSION: 3.7
+        DJANGO_VERSION: 2.2
+    << : *run-demo
+
+  django-3:
+    build:
+      context: .
+      args:
+        PYTHON_VERSION: 3.7
+        DJANGO_VERSION: 3.1
+    << : *run-demo
